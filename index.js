@@ -7,6 +7,7 @@ const bGround = require("fcc-express-bground");
 const myApp = require("./myApp");
 const express = require("express");
 const app = express();
+require("dotenv").config();
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use((req, res, next) => {
@@ -32,7 +33,11 @@ app.get("/", (req, res) => {
 });
 
 app.get("/json", (req, res) => {
-  res.json({ message: "Hello json" });
+  if (process.env.MESSAGE_STYLE === "uppercase") {
+    return res.json({ message: "HELLO JSON" });
+  } else {
+    return res.json({ message: "Hello json" });
+  }
 });
 
 app.use("/public", express.static(__dirname + "/public"));
