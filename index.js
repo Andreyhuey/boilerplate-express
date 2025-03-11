@@ -8,12 +8,6 @@ const myApp = require("./myApp");
 const express = require("express");
 const app = express();
 
-app.use(function (req, res, next) {
-  const string = req.method + " " + req.path + " - " + req.ip;
-  console.log(string);
-  next();
-});
-
 if (!process.env.DISABLE_XORIGIN) {
   app.use((req, res, next) => {
     const allowedOrigins = [
@@ -32,6 +26,14 @@ if (!process.env.DISABLE_XORIGIN) {
     next();
   });
 }
+
+// Middleware function to log requests
+app.use((req, res, next) => {
+  const string = `${req.method} ${req.path} - ${req.ip}`;
+  res.send(string);
+  console.log(string);
+  next();
+});
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
