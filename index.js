@@ -32,11 +32,11 @@ app.get("/", (req, res) => {
 });
 
 app.get("/json", (req, res) => {
-  if (process.env.MESSAGE_STYLE == "uppercase") {
-    return res.json({ message: "Hello json".toUpperCase() });
-  } else {
-    return res.json({ message: "Hello json" });
+  let message = "Hello json";
+  if (process.env.MESSAGE_STYLE === "uppercase") {
+    message = message.toUpperCase();
   }
+  res.json({ message });
 });
 
 app.use("/public", express.static(__dirname + "/public"));
