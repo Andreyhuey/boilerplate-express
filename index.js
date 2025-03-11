@@ -29,9 +29,7 @@ if (!process.env.DISABLE_XORIGIN) {
 
 // Middleware function to log requests
 app.use((req, res, next) => {
-  const string = `${req.method} ${req.path} - ${req.ip}`;
-  res.send(string);
-  console.log(string);
+  console.log(`${req.method} ${req.path} - ${req.ip}`);
   next();
 });
 
@@ -46,6 +44,17 @@ app.get("/json", (req, res) => {
   }
   res.json({ message });
 });
+
+app.get(
+  "/now",
+  (req, res, next) => {
+    req.time = new Date().toString();
+    next();
+  },
+  (req, res) => {
+    res.json({ time: req.time });
+  }
+);
 
 app.use("/public", express.static(__dirname + "/public"));
 
