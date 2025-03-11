@@ -58,6 +58,11 @@ app.get("/:word/echo", (req, res) => {
   res.json({ echo: req.params.word });
 });
 
+app.get("/name", (req, res) => {
+  const { first, last } = req.query;
+  res.json({ name: `${first} ${last}` });
+});
+
 app.use("/public", express.static(__dirname + "/public"));
 
 const port = process.env.PORT || 3000;
