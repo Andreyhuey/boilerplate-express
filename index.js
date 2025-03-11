@@ -54,6 +54,10 @@ app.get("/now", middleware, (req, res) => {
   res.send({ time: req.time });
 });
 
+app.get("/:word/echo", (req, res) => {
+  res.json({ echo: req.params.word });
+});
+
 app.use("/public", express.static(__dirname + "/public"));
 
 const port = process.env.PORT || 3000;
