@@ -37,30 +37,8 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });
 
-app.get("/json", (req, res) => {
-  let message = "Hello json";
-  if (process.env.MESSAGE_STYLE === "uppercase") {
-    message = message.toUpperCase();
-  }
-  res.json({ message });
-});
-
-const middleware = (req, res, next) => {
-  req.time = new Date().toString();
-  next();
-};
-
-app.get("/now", middleware, (req, res) => {
-  res.send({ time: req.time });
-});
-
 app.get("/:word/echo", (req, res) => {
   res.json({ echo: req.params.word });
-});
-
-app.post("/name", (req, res) => {
-  const { first, last } = req.body;
-  res.json({ name: `${first} ${last}` });
 });
 
 app.use("/public", express.static(__dirname + "/public"));
