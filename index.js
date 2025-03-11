@@ -45,16 +45,14 @@ app.get("/json", (req, res) => {
   res.json({ message });
 });
 
-app.get(
-  "/now",
-  (req, res, next) => {
-    req.time = new Date().toString();
-    next();
-  },
-  (req, res) => {
-    res.json({ time: req.time });
-  }
-);
+const middleware = (req, res, next) => {
+  req.time = new Date().toString();
+  next();
+};
+
+app.get("/now", middleware, (req, res) => {
+  res.send({ time: req.time });
+});
 
 app.use("/public", express.static(__dirname + "/public"));
 
